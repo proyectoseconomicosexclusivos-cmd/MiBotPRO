@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiBotPro - AI Bot Configurator</title>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.5",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0",
+    "express": "https://aistudiocdn.com/express@^5.1.0",
+    "cors": "https://aistudiocdn.com/cors@^2.8.5",
+    "dotenv": "https://aistudiocdn.com/dotenv@^17.2.3",
+    "@prisma/client": "https://aistudiocdn.com/@prisma/client@^6.19.0",
+    "jsonwebtoken": "https://aistudiocdn.com/jsonwebtoken@^9.0.2",
+    "bcryptjs": "https://aistudiocdn.com/bcryptjs@^3.0.3",
+    "vite": "https://aistudiocdn.com/vite@^7.2.2",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "serverless-http": "https://aistudiocdn.com/serverless-http@^4.0.0",
+    "stripe": "https://aistudiocdn.com/stripe@^19.3.1",
+    "process": "https://aistudiocdn.com/process@^0.11.10"
+  }
+}
+</script>
+<style>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#0052cc',
+              '50': '#e6f0ff',
+              '100': '#ccdfff',
+              '200': '#99c0ff',
+              '300': '#66a0ff',
+              '400': '#3380ff',
+              '500': '#0052cc',
+              '600': '#004ab3',
+              '700': '#00388a',
+              '800': '#002660',
+              '900': '#001436',
+            },
+            secondary: '#42526E',
+            accent: '#FFAB00',
+            light: '#F4F5F7',
+          }
+        }
+      }
+    }
+  </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-light">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

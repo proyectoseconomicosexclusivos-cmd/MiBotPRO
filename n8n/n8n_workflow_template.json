@@ -1,0 +1,150 @@
+{
+  "name": "MiBotPro - Master Bot Activation",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "path": "a987sd-asdy8-dfg7sdf-897dfg",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "webhookId": "53ee4720-cfae-4c28-b09c-17cc162c3d8c"
+    },
+    {
+      "parameters": {
+        "authentication": "openAiApi",
+        "model": "gpt-4-turbo",
+        "jsonMode": false,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert bot configurator. Based on the user's business details, create a concise, friendly, and professional personality prompt for a voice or chat bot. The bot should introduce itself and state its purpose clearly. Respond ONLY with the generated prompt text."
+          },
+          {
+            "role": "user",
+            "content": "Business Name: {{ $json.body.business_name }}\nServices: {{ $json.body.services }}\nBot Type: {{ $json.body.template_file }}"
+          }
+        ],
+        "options": {}
+      },
+      "name": "Generate Bot Personality (OpenAI)",
+      "type": "n8n-nodes-base.openAiChat",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIALS_ID",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.callback_url }}",
+        "options": {}
+      },
+      "name": "Update Status to 'Active'",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.templateId }}",
+              "operation": "contains",
+              "value2": "reservas"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "IF: Is Reservation Bot?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        900,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "content": "This is where you would add nodes to integrate with Retell AI, Twilio, Google Calendar, etc., using the generated personality from the OpenAI step and the API keys passed in the webhook body (e.g., $json.body.api_keys.retell).",
+        "options": {}
+      },
+      "name": "TODO: Add Bot Creation Logic Here",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        900,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Generate Bot Personality (OpenAI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Bot Personality (OpenAI)": {
+      "main": [
+        [
+          {
+            "node": "IF: Is Reservation Bot?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF: Is Reservation Bot?": {
+      "main": [
+        [
+          {
+            "node": "Update Status to 'Active'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Status to 'Active'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}
